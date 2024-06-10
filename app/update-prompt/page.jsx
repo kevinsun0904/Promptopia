@@ -5,6 +5,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 import Form from "@components/Form";
 
+const TAG_REGEX = /^#/;
+
 const EditPrompt = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -32,6 +34,9 @@ const EditPrompt = () => {
 
   const updatePrompt = async (e) => {
     e.preventDefault();
+
+    if (!TAG_REGEX.test(post.tag)) return alert("Tag must contain # at the start.");
+
     setSubmitting(true);
 
     if (!promptId) return alert("Prompt ID not found");
@@ -62,6 +67,7 @@ const EditPrompt = () => {
       setPost={setPost}
       submitting={submitting}
       handleSubmit={updatePrompt}
+      from="/profile"
     />
   );
 };

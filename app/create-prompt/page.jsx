@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 
 import Form from "@components/Form";
 
+const TAG_REGEX = /^#/;
+
 const CreatePrompt = () => {
   const router = useRouter();
   const { data: session } = useSession();
@@ -18,6 +20,9 @@ const CreatePrompt = () => {
 
   const createPrompt = async (e) => {
     e.preventDefault();
+
+    if (!TAG_REGEX.test(post.tag)) return alert("Tag must contain # at the start.");
+
     setSubmitting(true);
 
     try {
